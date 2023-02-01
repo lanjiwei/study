@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mapper.UserMapper">
+
+<!--  '${}'是字符串拼接方式，#{}是占位符方式-->
+    <select id="getUserByName" resultType="User">
+        select * from user where name = '${name}'
+<!--        select * from user where name = #{name}-->
+    </select>
+
+    <select id="checkLogin" resultType="user">
+        select * from user where name = #{param1} and password = #{param2}
+<!--        select * from user where name = '${param1} 'and password = '${param2}'-->
+    </select>
+
+    <select id="checkLoginByMap" resultType="user">
+        select * from user where name = '${name}' and password = '${password}'
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO ssm.`user` (name, age, password, gender) VALUES(#{name}, #{age}, #{password}, #{gender});
+<!--        insert into user values(#{name},#{age},#{password},#{gender})-->
+    </insert>
+
+<!--    User checkLoginByParam(@Param("name") String name, @Param("Password") String password);-->
+    <select id="checkLoginByParam" resultType="user">
+        select * from user where name = #{name} and password = #{password}
+    </select>
+
+
+
+<!--    Integer getCount();-->
+    <select id="getCount" resultType="Integer">
+        select count(*) from user
+    </select>
+
+<!--    Map<String ,Object> getUserByIdToMap(@Param("id") Integer id);-->
+    <select id="getUserByIdToMap" resultType="map">
+        select * from user where id = #{id}
+    </select>
+
+<!--    List<Map<String,Object>> getAllUserToMap();-->
+    <select id="getAllUserToMap" resultType="map">
+        select * from user
+    </select>
+
+
+<!--    List<User> getUserByLike(@Param("mohu") String mohu);-->
+    <select id="getUserByLike" resultType="user">
+<!--        select * from user where name like '%${mohu}%'-->
+        select * from user where name like concat('%',#{mohu},'%')
+    </select>
+
+
+<!--    void insertUserGetKey(User user);-->
+<!--    <insert id="insertUserGetKey" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into user values(#(name),#(age),#(password),#(gender))-->
+<!--    </insert>-->
+
+</mapper>

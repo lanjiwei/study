@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mapper.DeptMapper">
+
+    <resultMap id="deptAndEmpResultMap" type="Dept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+<!--        ofType设置集合类型的属性中存储的数据的类型-->
+        <collection property="emps" ofType="emp">
+            <id column="emp_id" property="empId"></id>
+            <result column="emp_name" property="empName"></result>
+            <result column="age" property="age"></result>
+            <result column="gender" property="gender"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getDeptAndEmpByDepyId" resultMap="deptAndEmpResultMap" >
+        select a.* , emp.*
+        from dept a
+        left join emp on emp.dept_id = a.dept_id
+        where a.dept_id = #{deptId}
+
+    </select>
+</mapper>

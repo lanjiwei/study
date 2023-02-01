@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mapper.DynamicSQLMapper">
+
+    <select id="getEmpByCondition" resultType="com.atguigu.mybatis.entity.Emp">
+        select * from emp where 1 = 1
+        <if test="empName != null and empName !='' ">
+            and emp_name = #{empName}
+        </if>
+        <if test="age != null and age !='' ">
+            and age = #{age}
+        </if>
+        <if test="gender != null and gender !='' ">
+            and gender = #{gender}
+        </if>
+    </select>
+
+    <insert id="insertMoreEmp">
+        insert into emp values
+        <foreach collection="emps" item="emp" separator=",">
+            (null,#{emp.empName},#{emp.age},#{emp.gender},null)
+        </foreach>
+    </insert>
+
+</mapper>

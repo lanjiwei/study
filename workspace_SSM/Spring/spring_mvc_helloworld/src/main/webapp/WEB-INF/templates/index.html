@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>index.html</h1>
+<a th:href="@{/test/hello}">测试springMVC</a>
+<hr>
+<a th:href="@{/test/aaa/test/ant}">测试 @RequestMapping支持ant风格的路径</a>
+<hr>
+<a th:href="@{/test/rest/admin/1}">测试 @RequestMapping注解的value属性中的占位符</a>
+<hr>
+<form th:action="@{/param/entity}" method="post">
+    用户名:<input type="text" name = "username"><br>
+    密码:<input type="text" name = "password"><br>
+    <input type="submit" value="登录"><br>
+</form>
+<hr>
+<a th:href="@{/test/mav}">测试通过ModelAndView向请求域共享数据</a>
+<hr>
+<a th:href="@{/test/model}">测试通过Model向请求域共享数据</a>
+<hr>
+<a th:href="@{/test/view/thymeleaf}">测试SpringMVC的视图ThymeleafView</a>
+<hr>
+<a th:href="@{/test/view/redirect}">测试SpringMVC的视图RedirectView</a>
+
+</body>
+</html>

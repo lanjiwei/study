@@ -1,0 +1,14 @@
+#配置静态资源的前缀会影响访问页的失效
+#spring:
+#  mvc:
+#    static-path-pattern: /res/**
+
+#开启HiddenHttpMethodFilter，也就是表单提交rest风格
+#开启contentnegotiation参数内容协商功能，也就是format=xxx
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    contentnegotiation:
+      favor-parameter: true

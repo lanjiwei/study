@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mapper.EmpMapper">
+
+<!--
+    字段名与属性名不一致的情况，如何处理映射关系？
+    1.为查询的字段设置别名，和属性名保持一致
+    2.当字段名符合Mysql的要求使用_，而属性符合java的要求使用驼峰
+    此时可以在mybatis的核心配置文件中设置一个全局配置，可以自动将下划线映射为驼峰
+    3.使用resultMap自定义映射
+-->
+
+<!--    resultMap：设置自定义映射-->
+<!--    属性：-->
+<!--    id：表示自定义映射的唯一标识-->
+<!--    type：查询的数据要映射的实体类的类型-->
+<!--    子标签：-->
+<!--    id：设置主键的映射关系-->
+<!--    result：设置普通字段的映射关系-->
+<!--    association：设置多对一的映射关系-->
+<!--    collection：设置一对多的映射关系-->
+<!--    属性：-->
+<!--    property：设置映射关系中实体类中的属性名-->
+<!--    column：设置映射关系中表中的字段名-->
+
+
+    <resultMap id="empResultMap" type="com.atguigu.mybatis.entity.Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+    </resultMap>
+
+    <!--  Emp getEmpByEmpId(@Param("empId") Integer empId);-->
+    <select id="getEmpByEmpId" resultMap="empResultMap">
+        select * from emp where emp_id = #{empId}
+    </select>
+
+<!--    <select id="getEmpByEmpId" resultType="emp">-->
+<!--      SELECT emp_id empId, emp_name empName, age, gender, dept_id FROM emp where emp_id = #{empId}-->
+<!--      select * from emp where emp_id = #{empId}-->
+<!--    </select>-->
+
+
+    <resultMap id="getEmpAndDeptByEmpId" type="com.atguigu.mybatis.entity.Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+<!--        <result column="dept_id" property="dept.deptId"></result>-->
+<!--        <result column="dept_name" property="dept.deptName"></result>-->
+        <!--多对一 -->
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+
+    <select id="getEmpAndDeptByEmpId" resultMap="getEmpAndDeptByEmpId">
+        select a.*, dept.*
+        from emp a
+        left join dept on a.dept_id = dept.dept_id
+        where a.emp_id = #{empId}
+
+    </select>
+</mapper>
